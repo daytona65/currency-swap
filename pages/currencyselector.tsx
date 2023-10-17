@@ -6,7 +6,12 @@ import {
     Modal
 } from 'react-bootstrap';
 
-const CurrencySelector = (props) => {
+interface Props {
+    setCurrency: string;
+    onSelection: (newValue: string) => void;
+}
+
+const CurrencySelector: React.FC<Props> = (props: Props) => {
   
     const currencies = [
         "BLUR", "bNEO", "BUSD", "USD", "ETH", "GMX", "STEVMOS", "LUNA", 
