@@ -40,7 +40,7 @@ const CurrencySelector = (props) => {
             centered
         >
             <Modal.Header className={styles.modal__header} closeButton>
-            <Modal.Title>Choose Currency</Modal.Title>
+            <Modal.Title>Select a Token</Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.modal__body}>
                 {currencies.map((currency, i) => (
