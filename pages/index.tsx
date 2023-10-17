@@ -60,7 +60,6 @@ const Home: NextPage = () => {
     .then(response => response.json())
     .then(data => {
       exchangeData = data;
-      console.log(exchangeData);
     })
     .catch(error => console.error('Error fetching data', error));
   
@@ -74,7 +73,6 @@ const Home: NextPage = () => {
     }
 
     const fromPrice = fromCurrencyData.price;
-    console.log(fromPrice);
     const toPrice = toCurrencyData.price;
 
     const convertedValue = (input * fromPrice) / toPrice;
