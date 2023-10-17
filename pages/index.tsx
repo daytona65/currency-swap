@@ -10,39 +10,81 @@ import styles from '../styles/Home.module.css';
 import { IoIosSwap } from 'react-icons/io';
 
 const Home: NextPage = () => {
-  const [inputValue, setInputValue] = useState('');
-  const [outputValue, setOutputValue] = useState('');
+  const [fromValue, setFromValue] = useState(0);
+  const [toValue, setToValue] = useState(0);
+  const [USD, setUSD] = useState(0);
 
   // Input value
   const handleInputChange = (e) => {
-    setInputValue(e.target.value);
+    setFromValue(e.target.value);
+    setToValue(handleConversion(from, to, e.target.value));
+    setUSD(convertUSD(from, e.target.value));
   };
 
   // Output value
   const handleOutputChange = (e) => {
-    setOutputValue(e.target.value);
+    setToValue(e.target.value);
+    setFromValue(handleConversion(to, from, e.target.value));
+    setUSD(convertUSD(to, e.target.value));
   };
 
   // Currency From
   const [from, setFrom] = useState('ETH');
   const handleCurrencyFrom = (currency : string) => {
     setFrom(currency);
+    setToValue(handleConversion(currency, to, fromValue));
+    setUSD(convertUSD(currency, fromValue));
   };
 
   // Currency To
   const [to, setTo] = useState('ETH');
   const handleCurrencyTo = (currency : string) => {
     setTo(currency);
+    setFromValue(handleConversion(currency, from, toValue));
+    setUSD(convertUSD(currency, toValue));
+  };
+
+  // Currency swap
+  const handleCurrencySwap = () => {
+    setFrom(to);
+    setTo(from);
+    setFromValue
+(toValue);
+    setToValue(fromValue);
+  };
+
+  // Exchange rates
+  const url = "https://interview.switcheo.com/prices.json";
+  var exchangeData;
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      exchangeData = data;
+      console.log(exchangeData);
+    })
+    .catch(error => console.error('Error fetching data', error));
+  
+  // Calculating exchange rates
+  const handleConversion = (from:string, to:string, input:number) => {
+    const fromCurrencyData = exchangeData.find(i => i.currency === from);
+    const toCurrencyData = exchangeData.find(i => i.currency === to);
+
+    if (!fromCurrencyData || !toCurrencyData) {
+      return null; // Return null if either currency is not found
+    }
+
+    const fromPrice = fromCurrencyData.price;
+    console.log(fromPrice);
+    const toPrice = toCurrencyData.price;
+
+    const convertedValue = (input * fromPrice) / toPrice;
+    return convertedValue.toFixed(8);
   }
 
-  // Currency Selection
-  const currencies = [
-    "BLUR", "bNEO", "BUSD", "USD", "ETH", "GMX", "STEVMOS", "LUNA", 
-    "RATOM", "STRD", "EVMOS", "IBCX", "IRIS", "ampLUNA", "KUJI", 
-    "STOSMO", "USDC", "axlUSDC", "ATOM", "STATOM", "OSMO", "rSWTH", 
-    "STLUNA", "LSI", "OKB", "OKT", "SWTH", "USC", "WBTC", "wstETH", 
-    "YieldUSD", "ZIL"
-  ];
+  const convertUSD = (curr:string, value:number) => {
+    const currencyData = exchangeData.find(i => i.currency === curr);
+    return (currencyData.price * value).toFixed(2);
+  }
 
   return (
     <div className={styles.container}>
@@ -61,35 +103,47 @@ const Home: NextPage = () => {
         </h1>
         <div className={styles.swap__container}>
           <div className={styles.swap}>
+            <div className={styles.input__container}>
               <input
-                type="text"
-                value={inputValue}
+                type="number"
+                min="0"
+                max="1000000"
+                step="0.01"
+                value={fromValue}
                 onChange={handleInputChange}
                 placeholder="You pay"
                 className={styles.input}
               />
-              <CurrencySelector onSelection={handleCurrencyFrom}/>
-              
+              <p>${USD}</p>
+              </div>
+              <CurrencySelector setCurrency={from} onSelection={handleCurrencyFrom}/>
           </div>
-          <button className={styles.swap__button}>
+          <button className={styles.swap__button} onClick={handleCurrencySwap}>
             <IoIosSwap size={75}/>
           </button>
           <div className={styles.swap}>
-              <input
-                type="text"
-                value={outputValue}
-                onChange={handleOutputChange}
-                placeholder="You receive"
-                className={styles.input}
-              />
-              <CurrencySelector onSelection={handleCurrencyTo} />
+              <div className={styles.input__container}>
+                <input
+                  type="number"
+                  min="0"
+                  max="1000000"
+                  step="0.01"
+                  value={toValue}
+                  onChange={handleOutputChange}
+                  placeholder="You receive"
+                  className={styles.input}
+                />
+                <p>${USD}</p>
+              </div>
+              
+              <CurrencySelector setCurrency={to} onSelection={handleCurrencyTo} />
                 
           </div>
 
         </div>
         
 
-        <ConnectButton />
+        {/* <ConnectButton/> */}
       </main>
     </div>
   );

@@ -54,6 +54,7 @@
 .nav_link {
 	font-weight: 600;
 	box-sizing: border-box;
+	color: var(--color-light);
 }
 
 .nav_link:hover,

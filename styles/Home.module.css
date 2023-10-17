@@ -18,7 +18,11 @@
 
 .input:focus {
   outline: none;
-  
+}
+
+.input__container {
+  display: flex;
+  flex-direction: column;
 }
 
 /* Currency Selector */

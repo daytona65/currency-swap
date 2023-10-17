@@ -6,11 +6,7 @@ import {
     Modal
 } from 'react-bootstrap';
 
-interface Selector {
-    onSelection: (currency : string) => void;
-}
-
-const CurrencySelector: React.FC<Selector> = ({ onSelection }) => {
+const CurrencySelector = (props) => {
   
     const currencies = [
         "BLUR", "bNEO", "BUSD", "USD", "ETH", "GMX", "STEVMOS", "LUNA", 
@@ -19,7 +15,6 @@ const CurrencySelector: React.FC<Selector> = ({ onSelection }) => {
         "STLUNA", "LSI", "OKB", "OKT", "SWTH", "USC", "WBTC", "wstETH", 
         "YieldUSD", "ZIL"
     ];
-    const [current, setCurrent] = useState('LSI');
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -27,16 +22,15 @@ const CurrencySelector: React.FC<Selector> = ({ onSelection }) => {
 
     const handleSelection = (currency: string) => {
         handleClose();
-        setCurrent(currency);
-        onSelection(currency);
+        props.onSelection(currency);
     };
 
 
     return (
       <div className={styles.main}>
         <Button className={styles.selectorbutton} onClick={handleOpen}>
-            <img src={`/tokens/${current}.svg`} alt={current} className={styles.icon}/>
-            {current}
+            <img src={`/tokens/${props.setCurrency}.svg`} alt={props.setCurrency} className={styles.icon}/>
+            {props.setCurrency}
         </Button>
 
         <Modal 

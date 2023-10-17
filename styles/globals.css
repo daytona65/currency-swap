@@ -20,7 +20,7 @@ a {
 
 :root { 
   --color-bg: #141314;
-  --color-bg-light: #2f023b;
+  --color-bg-light: #312a33;
   --color-bg-variant: #1a0b1e;
   --color-primary: #f2fa00;
   --color-primary-variant: #00c164;
@@ -34,4 +34,31 @@ a {
   --container-width-lg: 75%;
   --container-width-md: 85%;
   --container-width-sm: 90%;
+}
+
+/* Customize the scrollbar */
+::-webkit-scrollbar {
+  width: 12px; /* Set the width of the scrollbar */
+}
+
+/* Track (the background) */
+::-webkit-scrollbar-track {
+  background: var(--color-bg); /* Color of the track */
+}
+
+/* Handle (the draggable part) */
+::-webkit-scrollbar-thumb {
+  background: var(--color-bg-light); /* Color of the handle */
+  border-radius: 20px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color of the handle when hovered */
+}
+
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
 }
