@@ -1,0 +1,52 @@
+.main {
+    align-items: center;
+}
+
+.modal {
+    display: flex;
+    gap: 0;
+    outline: none;
+}
+
+.modal__header {
+    background-color: var(--color-bg);
+    border: 0px;
+}
+.modal__body {
+    background-color: var(--color-bg);
+    max-height: 400px;
+    overflow-y: auto;
+    border: 0px;
+}
+.modal__footer {
+    background-color: var(--color-bg);
+    border: 0px;
+}
+
+.selectorbutton{
+    width: 5rem;
+    background-color: transparent;
+    border: 0px;
+}
+
+.selectorbutton:hover {
+    background-color: var(--color-light);
+}
+
+
+.card {
+    background-color: var(--color-bg-variant);
+    border: 0px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card:hover {
+    background-color: var(--color-light);
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+}
